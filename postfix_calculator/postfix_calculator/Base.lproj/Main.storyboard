@@ -38,6 +38,9 @@
                                 <state key="normal" title="DEL">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="controlButtons:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X49-J4-50L"/>
+                                </connections>
                             </button>
                             <button opaque="NO" tag="12" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWA-Tc-FKP">
                                 <rect key="frame" x="287" y="187" width="75" height="73"/>
@@ -217,6 +220,7 @@
                                 </state>
                                 <connections>
                                     <action selector="controlButtons:" destination="BYZ-38-t0r" eventType="touchUpInside" id="B6P-FU-wld"/>
+                                    <action selector="equalPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BN8-di-jeV"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBJ-LH-mh8">
