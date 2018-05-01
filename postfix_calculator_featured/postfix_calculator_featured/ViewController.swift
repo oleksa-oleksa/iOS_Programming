@@ -2,12 +2,9 @@
 //  ViewController.swift
 //  postfix_calculator
 //
-//  Created by Oleksandra Baga on 28.04.18.
+//  Created by Oleksandra Baga on 12.04.18.
 //  Copyright © 2018 Oleksandra Baga. All rights reserved.
 //  For Beuth Hochschule für Technik. iOS Programming Course 7 Semester
-
-// Feature: The last 10 operations schould be on the bottom of the screen
-// Solution: Arrays
 
 import UIKit
 
@@ -27,12 +24,11 @@ class ViewController: UIViewController {
     var numberPrevious:Int?;
     var isMathPerforming = false;
     var isWaitingNext = false;
-    var lastOperations: [String]?
+    var lastOperations:[String] = []
     
     @IBOutlet weak var label: UILabel!
     
-    
-    
+    @IBOutlet weak var showLastOperations: UILabel!
     
     @IBAction func equalPressed(_ sender: UIButton) {
         // hides Enter button after the button was pressed once
@@ -45,6 +41,12 @@ class ViewController: UIViewController {
             numberPrevious = numberOnScreen
             numberOnScreen = 0
             label.text = "" // clears the screen from the previous number
+            
+            // adding the first element to the list of last 10 operations
+            let first = String(numberPrevious!)
+            lastOperations.append(first)
+            showLastOperations.text = lastOperations[0]
+            
             isMathPerforming = true // waiting for the second number
         }
         else {
@@ -55,6 +57,12 @@ class ViewController: UIViewController {
             numberPrevious = 0
             numberOnScreen = 0
             label.text = "" // clears the screen from the previous number
+            
+            // adding the first element to the list of last 10 operations
+            let first = String(numberPrevious!)
+            lastOperations.append(first)
+            showLastOperations.text = lastOperations[0]
+            
             isMathPerforming = true // waiting for the second number
         }
     }
@@ -71,6 +79,16 @@ class ViewController: UIViewController {
             if sender.tag == 12  && numberOnScreen != 0 {
                 numberPrevious = numberPrevious! / numberOnScreen!
                 label.text = String(numberPrevious!)
+                
+                // adding the next element to the list of last 10 operations
+                let operation = " / "
+                let next = String(numberOnScreen!)
+                lastOperations.append(operation)
+                lastOperations.append(next)
+
+                for i in lastOperations {
+                    showLastOperations.text = showLastOperations + lastOperations[i]
+                }
             }
                 
             else if sender.tag == 12 && numberOnScreen == 0 {
@@ -116,6 +134,9 @@ class ViewController: UIViewController {
         }
     }
     
+    // creates the number on the screen depending from previous settings:
+    // the very first number as first operand
+    // the second operand
     @IBAction func buttonPushed(_ sender: UIButton) {
     
         if isWaitingNext == true && numberPrevious != nil {
