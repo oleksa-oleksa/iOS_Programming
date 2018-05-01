@@ -20,15 +20,41 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    var numberOnScreen:Int?;
-    var numberPrevious:Int?;
-    var isMathPerforming = false;
-    var isWaitingNext = false;
+    var numberOnScreen:Int?
+    var numberPrevious:Int?
+    var isMathPerforming = false
+    var isWaitingNext = false
     var lastOperations:[String] = []
+    var numberOfOperations:Int = 0
     
     @IBOutlet weak var label: UILabel!
-    
     @IBOutlet weak var showLastOperations: UILabel!
+    @IBOutlet weak var showSign: UILabel!
+    
+    func addOperation(operation: String, operand: Int) {
+        // adding the next element to the list of last 10 operations
+        lastOperations.append(operation)
+        lastOperations.append(String(operand))
+        let joiner = " "
+        let joinedString = lastOperations.joined(separator: joiner)
+        showLastOperations.text = joinedString
+    }
+    
+    func modifyList() {
+        if numberOfOperations > 10 {
+            lastOperations.removeFirst()
+            lastOperations.removeFirst()
+        }
+    }
+    
+    func checkSign(result: Int) {
+        if result < 0 {
+            showSign.text = "-"
+        }
+        else {
+            showSign.text = "+"
+        }
+    }
     
     @IBAction func equalPressed(_ sender: UIButton) {
         // hides Enter button after the button was pressed once
@@ -43,10 +69,9 @@ class ViewController: UIViewController {
             label.text = "" // clears the screen from the previous number
             
             // adding the first element to the list of last 10 operations
-            let first = String(numberPrevious!)
-            lastOperations.append(first)
+            lastOperations.append(String(numberPrevious!))
             showLastOperations.text = lastOperations[0]
-            
+            numberOfOperations = 1; // init the counter with first operation
             isMathPerforming = true // waiting for the second number
         }
         else {
@@ -59,10 +84,9 @@ class ViewController: UIViewController {
             label.text = "" // clears the screen from the previous number
             
             // adding the first element to the list of last 10 operations
-            let first = String(numberPrevious!)
-            lastOperations.append(first)
+            lastOperations.append(String(numberPrevious!))
             showLastOperations.text = lastOperations[0]
-            
+            numberOfOperations = 1;
             isMathPerforming = true // waiting for the second number
         }
     }
@@ -74,43 +98,69 @@ class ViewController: UIViewController {
         if isMathPerforming == true && label.text != "" && sender.tag != 11 && sender.tag != 111 && sender.tag != 16 {
             numberOnScreen = Int(label.text!)!
             isWaitingNext = true;
-            
+            numberOfOperations += 1
+
             // Division
             if sender.tag == 12  && numberOnScreen != 0 {
                 numberPrevious = numberPrevious! / numberOnScreen!
                 label.text = String(numberPrevious!)
                 
+                // check the sign
+                checkSign(result: numberPrevious!)
+                // deletes the extra operations from the screen and array
+                modifyList()
                 // adding the next element to the list of last 10 operations
-                let operation = " / "
-                let next = String(numberOnScreen!)
-                lastOperations.append(operation)
-                lastOperations.append(next)
-
-                for i in lastOperations {
-                    showLastOperations.text = showLastOperations + lastOperations[i]
-                }
+                addOperation(operation: "/", operand: numberOnScreen!)
             }
                 
             else if sender.tag == 12 && numberOnScreen == 0 {
                 label.text = String(0)
+                
+                // check the sign
+                checkSign(result: numberPrevious!)
+                // deletes the extra operations from the screen and array
+                modifyList()
+                // adding the next element to the list of last 10 operations
+                addOperation(operation: "/", operand: numberOnScreen!)
             }
             
             // Multiplication
             else if sender.tag == 13 {
                 numberPrevious = numberPrevious! * numberOnScreen!
                 label.text = String(numberPrevious!)
+                
+                // check the sign
+                checkSign(result: numberPrevious!)
+                // deletes the extra operations from the screen and array
+                modifyList()
+                // adding the next element to the list of last 10 operations
+                addOperation(operation: "*", operand: numberOnScreen!)
             }
             
             // Substraction
             else if sender.tag == 14 {
                 numberPrevious = numberPrevious! - numberOnScreen!
                 label.text = String(numberPrevious!)
+                
+                // check the sign
+                checkSign(result: numberPrevious!)
+                // deletes the extra operations from the screen and array
+                modifyList()
+                // adding the next element to the list of last 10 operations
+                addOperation(operation: "-", operand: numberOnScreen!)
             }
             
             // Addition
             else if sender.tag == 15 {
                 numberPrevious = numberPrevious! + numberOnScreen!
                 label.text = String(numberPrevious!)
+                
+                // check the sign
+                checkSign(result: numberPrevious!)
+                // deletes the extra operations from the screen and array
+                modifyList()
+                // adding the next element to the list of last 10 operations
+                addOperation(operation: "+", operand: numberOnScreen!)
             }
         }
             
@@ -119,6 +169,11 @@ class ViewController: UIViewController {
             numberPrevious = 0
             numberOnScreen = 0
             label.text = ""
+            showSign.text = ""
+            
+            // delete last 10 operations
+            lastOperations.removeAll()
+            showLastOperations.text = ""
             
             if let equalButton = self.view.viewWithTag(16) as? UIButton{
                 equalButton.isEnabled = true
@@ -131,6 +186,7 @@ class ViewController: UIViewController {
             numberOnScreen = Int(label.text!)
             numberOnScreen = numberOnScreen! / 10
             label.text = String(numberOnScreen!)
+            checkSign(result: numberOnScreen!)
         }
     }
     

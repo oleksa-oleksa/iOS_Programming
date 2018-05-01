@@ -237,6 +237,13 @@
                                 <color key="textColor" red="0.56890691280413597" green="0.71112408446524422" blue="0.397167297306394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UoF-er-MjH">
+                                <rect key="frame" x="13" y="74" width="48" height="78"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="48"/>
+                                <color key="textColor" red="0.39199551939964294" green="0.5538216233253479" blue="0.12230948358774185" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.18391758419689119" green="0.18391758419689119" blue="0.18391758419689119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -244,6 +251,7 @@
                     <connections>
                         <outlet property="label" destination="nBJ-LH-mh8" id="Xbr-l4-DXN"/>
                         <outlet property="showLastOperations" destination="yoT-OX-L8Z" id="vvI-Z0-5n1"/>
+                        <outlet property="showSign" destination="UoF-er-MjH" id="p7o-Gx-neH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
