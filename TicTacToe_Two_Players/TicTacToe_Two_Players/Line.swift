@@ -6,6 +6,12 @@
 //  Copyright © 2018 Oleksandra Baga. All rights reserved.
 //
 
+// I have created the lines in Swift but then I have decided to use an image to draw the game field
+// Because I don't see the created field on the Main.storyboard
+// I think (at least for now) it would be hard to place the futher design elemens.
+// and I would not like to calculate the position of the all buttons.
+// Anyway I will save this code just for my educational purpose.
+
 import UIKit
 
 class Line: UIView {
@@ -55,10 +61,12 @@ class Line: UIView {
         lineHorizBottom.stroke()
     }
     
+
+    /*
     override func draw(_ rect: CGRect) {
         // Drawing code
-        drawGameField()
+        // drawGameField()
     }
- 
+ */
 
 }
