@@ -79,10 +79,22 @@ class ViewController: UIViewController {
     @IBAction func restartGame(_ sender: Any) {
         gameState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
         sum = 0
+        greetPlayers()
+        gameOver = 0
         
-        if let tmpButton1 = self.view.viewWithTag(1) as? UIButton {
-        tmpButton1.setImage(nil, for: UIControlState())
+        for i in 1...9 {
+            if let tmpButton = self.view.viewWithTag(i) as? UIButton {
+                tmpButton.setImage(nil, for: UIControlState())
+            }
         }
+    }
+    
+    func greetPlayers() {
+        gameInfo.text = "Game started!"
+        gameInfo.textColor = UIColor.blue
+        playerInfo.text = "Current turn:"
+        playerStatusInfo.text = "Player 1"
+        playerStatusInfo.textColor = UIColor.green
     }
     
     override func viewDidLoad() {
@@ -91,11 +103,7 @@ class ViewController: UIViewController {
         // game status information
         sum = gameState.reduce(0, +)
         if (sum == 0) {
-            gameInfo.text = "Game started!"
-            gameInfo.textColor = UIColor.blue
-            playerInfo.text = "Current turn:"
-            playerStatusInfo.text = "Player 1"
-            playerStatusInfo.textColor = UIColor.green
+            greetPlayers()
         }
     }
 
