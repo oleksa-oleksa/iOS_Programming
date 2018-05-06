@@ -127,7 +127,7 @@
                                             <color key="titleColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="restartGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wq2-M1-OBe"/>
+                                            <action selector="restartButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HbE-MN-XAO"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -155,6 +155,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Board.png" width="1078" height="1068"/>
+        <image name="Board.png" width="1172" height="1108"/>
     </resources>
 </document>

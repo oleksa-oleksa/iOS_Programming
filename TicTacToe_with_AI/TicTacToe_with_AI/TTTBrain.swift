@@ -7,26 +7,48 @@
 //
 
 import Foundation
+import UIKit
 
 class TTTBrain {
     
-    var activePlayer:Int = 1
-    var firstPlayer = 1 // Crosses
-    var secondPlayer = 2 // Zeros
     var gameState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    var sum:Int = 0
-    var gameOver:Int = 0;
-    
-    func checkGameOver(sumOfTurns: Int) {
-        // checking wheather the end of the game
-        if (sum > 8) {
-            gameInfo.text = "Game over!"
-            gameInfo.textColor = UIColor.red
-            playerInfo.text = ""
-            gameOver = 1
+
+    func isTurnAllowed(cellNo: Int) -> Bool {
+        if (gameState[cellNo]) == 0 {
+            return true
         }
         else {
-            gameInfo.text = ""
+            return false
+        }
+    }
+    
+    func markCell(cellNo: Int) {
+        gameState[cellNo] = 1
+    }
+    
+    func isGameOver() -> Bool {
+        let sum = gameState.reduce(0, +)
+        
+        if (sum > 8) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
+    func restartGame() {
+        gameState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    }
+    
+    func isNewGame() -> Bool {
+        let sum = gameState.reduce(0, +)
+        
+        if (sum == 0) {
+            return true
+        }
+        else {
+            return false
         }
     }
 }

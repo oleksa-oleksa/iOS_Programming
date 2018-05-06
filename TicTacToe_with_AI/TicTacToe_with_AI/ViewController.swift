@@ -8,15 +8,15 @@
 //
 
 import UIKit
+import UserNotifications
 
 class ViewController: UIViewController {
     
     var activePlayer:Int = 1
     var firstPlayer = 1 // Crosses
     var secondPlayer = 2 // Zeros
-    var gameState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    var sum:Int = 0
-    var gameOver:Int = 0;
+    
+    var ticTacToeGame:TTTBrain = TTTBrain()
     
     @IBOutlet weak var gameInfo: UILabel!
     @IBOutlet weak var playerInfo: UILabel!
@@ -25,17 +25,15 @@ class ViewController: UIViewController {
     @IBAction func gameFieldButtonPressed(_ sender: AnyObject) {
         
         // preventing the double clicking on the game field
-        if (gameState[sender.tag-1] == 0) {
+        if (ticTacToeGame.isTurnAllowed(cellNo: sender.tag-1)) {
             
-            gameState[sender.tag-1] = 1 // mark as passed
-            sum += 1
+            ticTacToeGame.markCell(cellNo: sender.tag - 1)
             
             // checking wheather the end of the game
-            if (sum > 8) {
+            if (ticTacToeGame.isGameOver()) {
                 gameInfo.text = "Game over!"
                 gameInfo.textColor = UIColor.red
                 playerInfo.text = ""
-                gameOver = 1
             }
             else {
                 gameInfo.text = ""
@@ -48,9 +46,8 @@ class ViewController: UIViewController {
                 playerStatusInfo.text = "Player 2"
                 playerStatusInfo.textColor = UIColor.blue
                 activePlayer = secondPlayer
-                print(sum)
                 
-                if (gameOver == 1) {
+                if (ticTacToeGame.isGameOver()) {
                     playerStatusInfo.text = "That's all folks!"
                     playerStatusInfo.textColor = UIColor.darkGray
                 }
@@ -61,9 +58,8 @@ class ViewController: UIViewController {
                 playerStatusInfo.text = "Player 1"
                 playerStatusInfo.textColor = UIColor.green
                 activePlayer = firstPlayer
-                print(sum)
                 
-                if (gameOver == 1) {
+                if (ticTacToeGame.isGameOver()) {
                     playerStatusInfo.text = "That's all folks!"
                     playerStatusInfo.textColor = UIColor.darkGray
                 }
@@ -71,16 +67,14 @@ class ViewController: UIViewController {
         }
         
         else {
-            gameState[sender.tag-1] = 1
+            ticTacToeGame.markCell(cellNo: sender.tag - 1)
         }
     }
     
     
-    @IBAction func restartGame(_ sender: Any) {
-        gameState = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        sum = 0
+    @IBAction func restartButtonPressed(_ sender: Any) {
+        ticTacToeGame.restartGame()
         greetPlayers()
-        gameOver = 0
         
         for i in 1...9 {
             if let tmpButton = self.view.viewWithTag(i) as? UIButton {
@@ -101,8 +95,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         // game status information
-        sum = gameState.reduce(0, +)
-        if (sum == 0) {
+        if (ticTacToeGame.isNewGame()) {
             greetPlayers()
         }
     }
@@ -111,7 +104,5 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 
