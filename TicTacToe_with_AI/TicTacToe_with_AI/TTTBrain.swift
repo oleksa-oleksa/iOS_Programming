@@ -29,21 +29,79 @@ class TTTBrain {
         }
     }
     
-    func makeTurn(cellNo: Int, activePlayer: Int) -> Int {
-        // saving the player's turn
+    func makeTurn(cellNo: Int, activePlayer: Int) {
+    
         gameState[cellNo] = activePlayer
+    }
+    
+    func computerMakeTurn() -> Int {
+        /* Algorithm:
+         1. If AI can win, it wins
+         2. AI blocks your winning combinations
+         3. AI tries to create a winning combination
+         
+         a1. If center is not occupied - take it
+         a2. if center is yours - 1. block human 2. take a free corner to create
+         
+         b1. if center is occupaed - take corner
+         b2. 1. block human 2. make winning combination
+         */
         
-        var newActivePlayer:Int?
+        var turnCell:Int?
+        var foundLine:[Int]?
+        let cornerArray = [[0, 1, 2], [0, 3, 6], [2, 5, 8], [6, 7, 8]]
         
-        if (activePlayer == 1) {
-            newActivePlayer = 2
+        // take center
+        if gameState[4] == 0 {
+            turnCell = 4
         }
+        
+        // take a free corner and check possibility to block human
+        else {
+            var foundTaken:Bool = false
             
-        else if (activePlayer == 2) {
-            newActivePlayer = 1
+            // find the line with a cross to block
+            for combination in cornerArray {
+                if gameState[combination[0]] == 1 || gameState[combination[1]] == 1 || gameState[combination[2]] == 1 {
+                    foundTaken = true
+                    foundLine = combination
+                }
+            }
+            
+            if foundTaken == true {
+                turnCell = blockRandomly(lineCombination: foundLine!)
+            }
+            
+            // human just took center and the rest is free
+            if foundTaken == false {
+                repeat {
+                    let randomIndex = Int(arc4random_uniform(UInt32(cornerArray.count)))
+                    let randomLine = cornerArray[randomIndex]
+                    turnCell = blockRandomly(lineCombination: randomLine)
+                    
+                    if gameState[turnCell!] != 0 {
+                        turnCell = nil
+                    }
+                } while (turnCell == nil)
+            }
         }
-
-        return newActivePlayer!
+        return turnCell! // for button tag
+    }
+    
+    func blockRandomly(lineCombination: [Int]) -> Int{
+    
+        var turnCell:Int?
+    
+        repeat {
+            let randomIndex = Int(arc4random_uniform(UInt32(lineCombination.count)))
+            turnCell = randomIndex
+            
+            if gameState[turnCell!] != 0 {
+                turnCell = nil
+            }
+        } while (turnCell == nil)
+        
+        return turnCell!
     }
     
     func isGameOver() -> Bool {
