@@ -32,7 +32,9 @@ class TTTBrain {
     
     func makeTurn(cellNo: Int, activePlayer: Int) {
     
-        gameState[cellNo] = activePlayer
+        if gameEnded == false {
+            gameState[cellNo] = activePlayer
+        }
     }
     
     func computerMakeTurn() -> Int {
@@ -49,39 +51,18 @@ class TTTBrain {
          */
         
         var turnCell:Int?
-        //var foundLine:[Int]?
-        //let cornerArray = [[0, 1, 2], [0, 3, 6], [2, 5, 8], [6, 7, 8]]
-        //let crossArray = [[0, 4, 8], [2, 4, 6]]
         
-        // take center
+        /********************************************************************
+        //  a1. If center is not occupied - take it
+         ********************************************************************/
+
         if gameState[4] == 0 {
             turnCell = 4
         }
         
-        // if center is already taken by AI - take a corner on the line that is not occupied by a human
-        if turnCell == nil && gameState[4] == 2 {
-            // first diagonal is free for AI
-            if gameState[0] != 1 && gameState[8] != 1 {
-                if gameState[0] == 0 {
-                    turnCell = 0
-                }
-                else if gameState[8] == 0 {
-                    turnCell = 8
-                }
-            }
-                
-            // second diagonal is free for AI
-            if gameState[2] != 1 && gameState[6] != 1 {
-                if gameState[2] == 0 {
-                    turnCell = 2
-                }
-                else if gameState[6] == 0 {
-                    turnCell = 6
-                }
-            }
-        }
-        
+        /********************************************************************
         // if we have 2 computer turns on one of the diagonals: AI can win, it wins
+         ********************************************************************/
         if turnCell == nil && gameState[4] == 2 {
             // first diagonal has already 2 computer turns
             if gameState[0] != 1 && gameState[8] != 1 {
@@ -104,112 +85,254 @@ class TTTBrain {
             }
         }
         
+        /********************************************************************
+         // if we have 2 computer turns on one of the lines: AI can win, it wins
+         ********************************************************************/
+        
+        if turnCell == nil && gameState[4] == 2 {
+            // first diagonal has already 2 computer turns
+            if gameState[1] != 1 && gameState[7] != 1 {
+                if gameState[1] == 2 {
+                    turnCell = 7
+                }
+                else if gameState[7] == 2 {
+                    turnCell = 1
+                }
+            }
+            
+            // has already 2 computer turns
+            if gameState[3] != 1 && gameState[5] != 1 {
+                if gameState[3] == 2 {
+                    turnCell = 5
+                }
+                else if gameState[5] == 2 {
+                    turnCell = 3
+                }
+            }
+        }
+        
+        /********************************************************************
+         // human turn is on one of the lines in the middle: try to find free cell
+         ********************************************************************/
+        if turnCell == nil && gameState[4] == 2 {
+            if gameState[1] == 1 && gameState[0] == 0 && gameState[2] == 0 {
+                turnCell = 0
+            }
+            
+            if gameState[5] == 1 && gameState[2] == 0 && gameState[8] == 0 {
+                turnCell = 2
+            }
+            
+            if gameState[7] == 1 && gameState[6] == 0 && gameState[8] == 0 {
+                turnCell = 8
+            }
+            
+            if gameState[3] == 1 && gameState[0] == 0 && gameState[6] == 0 {
+                turnCell = 6
+            }
+        }
+        
+        /********************************************************************
         // if center is already taken by AI - but cornes were taken by human: Block Human
+        ********************************************************************/
+
         if turnCell == nil && gameState[4] == 2 {
             // left vertical line has two human turn: block human
             if gameState[0] == 1 && gameState[6] == 1 {
-                if gameState[3] != 2 {
+                if gameState[3] != 2 && gameState[3] == 0 {
                     turnCell = 3
                 }
                 else {
                     if gameState[5] == 0 {
-                    turnCell = 5
+                        turnCell = 5
                     }
                 }
             }
+            
+            if gameState[0] == 1 && gameState[3] == 1 {
+                if gameState[6] != 2 && gameState[6] == 0 {
+                    turnCell = 6
+                }
+                else {
+                    if gameState[5] == 0 {
+                        turnCell = 5
+                    }
+                }
+            }
+            
+            if gameState[6] == 1 && gameState[3] == 1 {
+                if gameState[0] != 2 && gameState[0] == 0 {
+                    turnCell = 0
+                }
+                else {
+                    if gameState[5] == 0 {
+                        turnCell = 5
+                    }
+                }
+            }
+            
+            if gameState[6] == 1 && gameState[3] == 1 {
+                if gameState[0] != 2 && gameState[0] == 0 {
+                    turnCell = 6
+                }
+                else {
+                    if gameState[5] == 0 {
+                        turnCell = 5
+                    }
+                }
+            }
+            
             // right vertical line has two human turn: block human
             if gameState[2] == 1 && gameState[8] == 1 {
-                if gameState[5] != 2 {
+                if gameState[5] != 2 && gameState[5] == 0 {
                     turnCell = 5
                 }
                 else {
                     if gameState[3] == 0 {
-                    turnCell = 3
+                        turnCell = 3
+                    }
+                }
+            }
+            
+            if gameState[2] == 1 && gameState[5] == 1 {
+                if gameState[8] != 2 && gameState[8] == 0 {
+                    turnCell = 8
+                }
+                else {
+                    if gameState[3] == 0 {
+                        turnCell = 3
+                    }
+                }
+            }
+            
+            if gameState[8] == 1 && gameState[5] == 1 {
+                if gameState[2] != 2 && gameState[2] == 0 {
+                    turnCell = 2
+                }
+                else {
+                    if gameState[3] == 0 {
+                        turnCell = 3
                     }
                 }
             }
             
             // top horisontal line has two human turn: block human
             if gameState[0] == 1 && gameState[2] == 1 {
-                if gameState[1] != 2 {
+                if gameState[1] != 2 && gameState[1] == 0 {
                     turnCell = 1
                 }
                 else {
                     if gameState[7] == 0 {
-                    turnCell = 7
+                        turnCell = 7
+                    }
+                }
+            }
+            
+            if gameState[0] == 1 && gameState[1] == 1 {
+                if gameState[2] != 2 && gameState[2] == 0 {
+                    turnCell = 2
+                }
+                else {
+                    if gameState[7] == 0 {
+                        turnCell = 7
+                    }
+                }
+            }
+            
+            if gameState[1] == 1 && gameState[2] == 1 {
+                if gameState[0] != 2 && gameState[0] == 0 {
+                    turnCell = 0
+                }
+                else {
+                    if gameState[7] == 0 {
+                        turnCell = 7
                     }
                 }
             }
             
             // bottom horisontal line has two human turn: block human
             if gameState[6] == 1 && gameState[8] == 1 {
-                if gameState[7] != 2 {
+                if gameState[7] != 2 && gameState[7] == 0 {
                     turnCell = 7
                 }
                 else {
                     if gameState[1] == 0 {
-                    turnCell = 1
+                        turnCell = 1
+                    }
+                }
+            }
+            
+            if gameState[6] == 1 && gameState[7] == 1 {
+                if gameState[8] != 2 && gameState[8] == 0 {
+                    turnCell = 8
+                }
+                else {
+                    if gameState[1] == 0 {
+                        turnCell = 1
+                    }
+                }
+            }
+            
+            if gameState[7] == 1 && gameState[8] == 1 {
+                if gameState[6] != 2 && gameState[6] == 0 {
+                    turnCell = 6
+                }
+                else {
+                    if gameState[1] == 0 {
+                        turnCell = 1
                     }
                 }
             }
         }
         
-        // if center is occupied by human: take a free corner and check possibility to block human
-        /* if turnCell == nil && gameState[4] == 2 {
-            var foundTaken:Bool = false
-            
-            // find the line with a cross to block
-            for combination in cornerArray {
-                if gameState[combination[0]] == 1 || gameState[combination[1]] == 1 || gameState[combination[2]] == 1 {
-                    foundTaken = true
-                    foundLine = combination
+        /********************************************************************
+        // if center is already taken by AI but cornes are still free -
+        // take a corner on the line that is not occupied by a human
+         ********************************************************************/
+
+        if turnCell == nil && gameState[4] == 2 {
+            // first diagonal is free for AI
+            if gameState[0] != 1 && gameState[8] != 1 {
+                if gameState[0] == 0 {
+                    turnCell = 0
+                }
+                else if gameState[8] == 0 {
+                    turnCell = 8
                 }
             }
-            
-            if foundTaken == true {
-                turnCell = blockRandomly(lineCombination: foundLine!)
+                
+            // second diagonal is free for AI
+            if gameState[2] != 1 && gameState[6] != 1 {
+                if gameState[2] == 0 {
+                    turnCell = 2
+                }
+                else if gameState[6] == 0 {
+                    turnCell = 6
+                }
             }
+        }
+        
+        /********************************************************************
+         // if center is already taken by human
+         ********************************************************************/
+        if turnCell == nil && gameState[4] == 1 {
             
-            // human just took center and the rest is free
-            if foundTaken == false {
-                repeat {
-                    let randomIndex = Int(arc4random_uniform(UInt32(cornerArray.count)))
-                    let randomLine = cornerArray[randomIndex]
-                    turnCell = blockRandomly(lineCombination: randomLine)
-                    
-                    if gameState[turnCell!] != 0 {
-                        turnCell = nil
-                    }
-                } while (turnCell == nil)
-            }
-        } */
+            
+        }
+        
         return turnCell! // for button tag
     }
     
-    func blockRandomly(lineCombination: [Int]) -> Int{
-    
-        var turnCell:Int?
-    
-        repeat {
-            let randomIndex = Int(arc4random_uniform(UInt32(lineCombination.count)))
-            turnCell = randomIndex
-            
-            if gameState[turnCell!] != 0 {
-                turnCell = nil
-            }
-        } while (turnCell == nil)
-        
-        return turnCell!
-    }
     
     func isGameOver() -> Bool {
         // Player 1 has 5 turns marked with 1 ==> sum is 5 when player 1 has finished
         // Player 2 has 4 turns marked with 2 ==> sum is 8 when player 2 has finished
-        // Total sum = 13 when gameis over
+        // Total sum = 13 when game is over
         
         let sum = gameState.reduce(0, +)
         
         if (sum > 12) {
+            gameEnded = true;
             return true
         }
         else {

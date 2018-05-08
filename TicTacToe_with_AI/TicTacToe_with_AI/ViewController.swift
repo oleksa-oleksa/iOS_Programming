@@ -59,71 +59,86 @@ class ViewController: UIViewController {
                 setImageBackground(cellNo: turnCell, activePlayerSign: activePlayerSign)
                 designButtons(activePlayerName: activePlayerName, color: color!)
             }
+            
+            checkGameOverAfterTurn()
+            
             /****************************************/
             // COMPUTER TURN
             /****************************************/
-            
-            // set turnCell to a new value - Algorith TTTBrain
-            turnCell = ticTacToeGame.computerMakeTurn()
-            
-            // Save the turn
-            self.ticTacToeGame.makeTurn(cellNo: turnCell, activePlayer: self.computerPlayer)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            if ticTacToeGame.gameEnded != true {
+                // set turnCell to a new value - Algorith TTTBrain
+                turnCell = ticTacToeGame.computerMakeTurn()
+                
+                // Save the turn
+                self.ticTacToeGame.makeTurn(cellNo: turnCell, activePlayer: self.computerPlayer)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 
-                self.activePlayerSign = "zero.png"
-                self.activePlayerName = "Your Turn"
-                self.color = self.green
-            
-                self.setImageBackground(cellNo: turnCell, activePlayerSign: self.activePlayerSign)
-                self.designButtons(activePlayerName: self.activePlayerName, color: self.color!)
-            
-                // set next turn to a human back
-                self.activePlayer = self.humanPlayer
-            }
-            /****************************************/
-            // GAME OVER: NO WINNER
-            /****************************************/
-            if (ticTacToeGame.isGameOver()) {
-                activePlayerName = "That's all folks!"
+                    self.activePlayerSign = "zero.png"
+                    self.activePlayerName = "Your Turn"
+                    self.color = self.green
                 
-                gameOverInfo = "Game Over!"
-                color = red
+                    self.setImageBackground(cellNo: turnCell, activePlayerSign: self.activePlayerSign)
+                    self.designButtons(activePlayerName: self.activePlayerName, color: self.color!)
                 
-                designButtons(activePlayerName: activePlayerName, color: color!)
+                    // set next turn to a human back
+                    self.activePlayer = self.humanPlayer
+                    }
             }
             
-            /****************************************/
-            // GAME OVER: SOMEONE WON
-            /****************************************/
-            (winner, winButtons) = ticTacToeGame.getWinner()
-            
-            if winner == 1 {
-                activePlayerName = "YOU WON!"
-                gameOverInfo = "Game Over!"
-                color = UIColor(red: 113.0/255.0, green:
-                    165.0/255.0, blue: 29.0/255.0, alpha: 1.0)
-                
-                designButtons(activePlayerName: activePlayerName, color: color!)
-            }
-            
-            if winner == 2 {
-                activePlayerName = "COMPUTER WON!"
-                gameOverInfo = "Game Over!"
-                color = UIColor(red: 209.0/255.0, green:
-                    35.0/255.0, blue: 35.0/255.0, alpha: 1.0)
-                
-                designButtons(activePlayerName: activePlayerName, color: color!)
-            }
+            checkGameOverAfterTurn()
         }
     }
     
+    func checkGameOverAfterTurn() {
+        /****************************************/
+        // GAME OVER: NO WINNER
+        /****************************************/
+        if (ticTacToeGame.isGameOver()) {
+            activePlayerName = "That's all folks!"
+            
+            gameOverInfo = "Game Over!"
+            color = red
+            
+            designButtons(activePlayerName: activePlayerName, color: color!)
+        }
+        
+        /****************************************/
+        // GAME OVER: SOMEONE WON
+        /****************************************/
+        (winner, winButtons) = ticTacToeGame.getWinner()
+        
+        if winner == 1 {
+            activePlayerName = "YOU WON!"
+            gameOverInfo = "Game Over!"
+            color = UIColor(red: 113.0/255.0, green:
+                165.0/255.0, blue: 29.0/255.0, alpha: 1.0)
+            
+            designButtons(activePlayerName: activePlayerName, color: color!)
+        }
+        
+        if winner == 2 {
+            activePlayerName = "COMPUTER WON!"
+            gameOverInfo = "Game Over!"
+            color = UIColor(red: 209.0/255.0, green:
+                35.0/255.0, blue: 35.0/255.0, alpha: 1.0)
+            
+            designButtons(activePlayerName: activePlayerName, color: color!)
+        }
+    }
+    
+    /********************************************************************
+     // DESIGN GAME FIELD
+     ********************************************************************/
     func setImageBackground(cellNo: Int, activePlayerSign: String) {
         if let tmpButton = self.view.viewWithTag(cellNo + 1) as? UIButton {
             tmpButton.setImage(UIImage(named: activePlayerSign), for: UIControlState())
         }
     }
     
+    /********************************************************************
+     // DESIGN TEXT FIELDS
+     ********************************************************************/
     func designButtons(activePlayerName: String, color: UIColor) {
         playerStatusInfo.text = activePlayerName
         playerStatusInfo.textColor = color
@@ -149,7 +164,9 @@ class ViewController: UIViewController {
         }
     }
     
-    
+    /********************************************************************
+     // DETECT RESTART BUTTON
+     ********************************************************************/
     @IBAction func restartButtonPressed(_ sender: Any) {
         ticTacToeGame.restartGame()
         greetPlayers()
@@ -165,6 +182,9 @@ class ViewController: UIViewController {
         }
     }
     
+    /********************************************************************
+     // GREETING BY RESTART
+     ********************************************************************/
     func greetPlayers() {
         gameInfo.text = "Game started!"
         gameInfo.textColor = UIColor.blue
@@ -173,6 +193,9 @@ class ViewController: UIViewController {
         playerStatusInfo.textColor = UIColor(red: 113.0/255.0, green:
             165.0/255.0, blue: 29.0/255.0, alpha: 1.0)
     }
+    
+    
+/********************************************************************/
     
     override func viewDidLoad() {
         super.viewDidLoad()
