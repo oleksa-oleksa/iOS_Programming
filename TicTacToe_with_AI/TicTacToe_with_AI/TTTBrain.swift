@@ -4,6 +4,7 @@
 //
 //  Created by Oleksandra Baga on 03.05.18.
 //  Copyright © 2018 Oleksandra Baga. All rights reserved.
+// AI created by Oleksandra Baga on 08.05.2018
 //
 
 import Foundation
@@ -48,16 +49,113 @@ class TTTBrain {
          */
         
         var turnCell:Int?
-        var foundLine:[Int]?
-        let cornerArray = [[0, 1, 2], [0, 3, 6], [2, 5, 8], [6, 7, 8]]
+        //var foundLine:[Int]?
+        //let cornerArray = [[0, 1, 2], [0, 3, 6], [2, 5, 8], [6, 7, 8]]
+        //let crossArray = [[0, 4, 8], [2, 4, 6]]
         
         // take center
         if gameState[4] == 0 {
             turnCell = 4
         }
         
-        // take a free corner and check possibility to block human
-        else {
+        // if center is already taken by AI - take a corner on the line that is not occupied by a human
+        if turnCell == nil && gameState[4] == 2 {
+            // first diagonal is free for AI
+            if gameState[0] != 1 && gameState[8] != 1 {
+                if gameState[0] == 0 {
+                    turnCell = 0
+                }
+                else if gameState[8] == 0 {
+                    turnCell = 8
+                }
+            }
+                
+            // second diagonal is free for AI
+            if gameState[2] != 1 && gameState[6] != 1 {
+                if gameState[2] == 0 {
+                    turnCell = 2
+                }
+                else if gameState[6] == 0 {
+                    turnCell = 6
+                }
+            }
+        }
+        
+        // if we have 2 computer turns on one of the diagonals: AI can win, it wins
+        if turnCell == nil && gameState[4] == 2 {
+            // first diagonal has already 2 computer turns
+            if gameState[0] != 1 && gameState[8] != 1 {
+                if gameState[0] == 2 {
+                    turnCell = 8
+                }
+                else if gameState[8] == 2 {
+                    turnCell = 0
+                }
+            }
+            
+            // has already 2 computer turns
+            if gameState[2] != 1 && gameState[6] != 1 {
+                if gameState[2] == 2 {
+                    turnCell = 6
+                }
+                else if gameState[6] == 2 {
+                    turnCell = 2
+                }
+            }
+        }
+        
+        // if center is already taken by AI - but cornes were taken by human: Block Human
+        if turnCell == nil && gameState[4] == 2 {
+            // left vertical line has two human turn: block human
+            if gameState[0] == 1 && gameState[6] == 1 {
+                if gameState[3] != 2 {
+                    turnCell = 3
+                }
+                else {
+                    if gameState[5] == 0 {
+                    turnCell = 5
+                    }
+                }
+            }
+            // right vertical line has two human turn: block human
+            if gameState[2] == 1 && gameState[8] == 1 {
+                if gameState[5] != 2 {
+                    turnCell = 5
+                }
+                else {
+                    if gameState[3] == 0 {
+                    turnCell = 3
+                    }
+                }
+            }
+            
+            // top horisontal line has two human turn: block human
+            if gameState[0] == 1 && gameState[2] == 1 {
+                if gameState[1] != 2 {
+                    turnCell = 1
+                }
+                else {
+                    if gameState[7] == 0 {
+                    turnCell = 7
+                    }
+                }
+            }
+            
+            // bottom horisontal line has two human turn: block human
+            if gameState[6] == 1 && gameState[8] == 1 {
+                if gameState[7] != 2 {
+                    turnCell = 7
+                }
+                else {
+                    if gameState[1] == 0 {
+                    turnCell = 1
+                    }
+                }
+            }
+        }
+        
+        // if center is occupied by human: take a free corner and check possibility to block human
+        /* if turnCell == nil && gameState[4] == 2 {
             var foundTaken:Bool = false
             
             // find the line with a cross to block
@@ -84,7 +182,7 @@ class TTTBrain {
                     }
                 } while (turnCell == nil)
             }
-        }
+        } */
         return turnCell! // for button tag
     }
     
