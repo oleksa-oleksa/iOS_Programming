@@ -61,6 +61,52 @@ class TTTBrain {
         }
         
         /********************************************************************
+         // if we have 2 computer turns on one of the lines: AI can win, it wins
+         ********************************************************************/
+        
+        if turnCell == nil && gameState[4] == 2 {
+            // first diagonal has already 2 computer turns
+            if gameState[0] != 1 && gameState[8] != 1 {
+                if gameState[0] == 2 {
+                    turnCell = 8
+                }
+                else if gameState[8] == 2 {
+                    turnCell = 0
+                }
+            }
+            
+            // second diagonal has already 2 computer turns
+            if gameState[2] != 1 && gameState[6] != 1 {
+                if gameState[2] == 2 {
+                    turnCell = 6
+                }
+                else if gameState[6] == 2 {
+                    turnCell = 2
+                }
+            }
+            
+            // vertical diagonal has already 2 computer turns
+            if gameState[1] != 1 && gameState[7] != 1 {
+                if gameState[1] == 2 {
+                    turnCell = 7
+                }
+                else if gameState[7] == 2 {
+                    turnCell = 1
+                }
+            }
+            
+            // horizontal has already 2 computer turns
+            if gameState[3] != 1 && gameState[5] != 1 {
+                if gameState[3] == 2 {
+                    turnCell = 5
+                }
+                else if gameState[5] == 2 {
+                    turnCell = 3
+                }
+            }
+        }
+        
+        /********************************************************************
         // if center and one corner already taken by Human
         // 2. try to block human
         ********************************************************************/
@@ -95,7 +141,6 @@ class TTTBrain {
         if turnCell == nil && gameState[4] == 1 {
             // Blocks the human winning combination:
             // first diagonal should be blocked by AI
-            var combinations = []
             
             if gameState[3] == 1 && gameState[5] == 0 {
                 turnCell = 5
@@ -120,52 +165,42 @@ class TTTBrain {
          // just make turn on the corner
          ********************************************************************/
         if turnCell == nil && gameState[4] == 1 {
+            var combinations:Array<Int> = []
+
             if gameState[0] == 0 && gameState[8] == 0 {
-                turnCell = 8
+                combinations.append(0)
+                combinations.append(8)
             }
             
             if gameState[2] == 0 && gameState[6] == 0 {
-                turnCell = 2
+                combinations.append(2)
+                combinations.append(6)
             }
             
-            // both sides are still free, just make turn on the corner
+            // FEATURE: make random choise if mire than one if worked
+            // it will omit the situation when human can recognize the pattern and find out which case is the last
+            let randomIndex = Int(arc4random_uniform(UInt32(combinations.count)))
+            turnCell = combinations[randomIndex]
+        }
+        
+        // both sides are still free, just make turn on the corner
+        if turnCell == nil && gameState[4] == 1 {
+            var combinations:Array<Int> = []
+
             if gameState[3] == 0 && gameState[5] == 0 {
-                turnCell = 3
+                combinations.append(3)
             }
             
-            if gameState[1] == 0 && gameState[8] == 7 {
-                turnCell = 1
+            if gameState[1] == 0 && gameState[7] == 0 {
+                combinations.append(7)
+                
             }
+            let randomIndex = Int(arc4random_uniform(UInt32(combinations.count)))
+            turnCell = combinations[randomIndex]
         }
         
         
         
-        
-        /********************************************************************
-         // if we have 2 computer turns on one of the lines: AI can win, it wins
-         ********************************************************************/
-        
-        if turnCell == nil && gameState[4] == 2 {
-            // first diagonal has already 2 computer turns
-            if gameState[1] != 1 && gameState[7] != 1 {
-                if gameState[1] == 2 {
-                    turnCell = 7
-                }
-                else if gameState[7] == 2 {
-                    turnCell = 1
-                }
-            }
-            
-            // has already 2 computer turns
-            if gameState[3] != 1 && gameState[5] != 1 {
-                if gameState[3] == 2 {
-                    turnCell = 5
-                }
-                else if gameState[5] == 2 {
-                    turnCell = 3
-                }
-            }
-        }
         
         /********************************************************************
          // if we have 2 human turns on one of the lines: block human
@@ -197,6 +232,7 @@ class TTTBrain {
          // human turn is on one of the lines in the middle: try to find free cell
          ********************************************************************/
         if turnCell == nil && gameState[4] == 2 {
+
             if gameState[1] == 1 && gameState[0] == 0 && gameState[2] == 0 {
                 turnCell = 0
             }
@@ -222,7 +258,7 @@ class TTTBrain {
         if turnCell == nil && gameState[4] == 2 {
             // left vertical line has two human turn: block human
             if gameState[0] == 1 && gameState[6] == 1 {
-                if gameState[3] != 2 && gameState[3] == 0 {
+                if gameState[3] == 0 {
                     turnCell = 3
                 }
                 else {
@@ -233,7 +269,7 @@ class TTTBrain {
             }
             
             if gameState[0] == 1 && gameState[3] == 1 {
-                if gameState[6] != 2 && gameState[6] == 0 {
+                if gameState[6] == 0 {
                     turnCell = 6
                 }
                 else {
@@ -244,7 +280,7 @@ class TTTBrain {
             }
             
             if gameState[6] == 1 && gameState[3] == 1 {
-                if gameState[0] != 2 && gameState[0] == 0 {
+                if gameState[0] == 0 {
                     turnCell = 0
                 }
                 else {
@@ -254,20 +290,10 @@ class TTTBrain {
                 }
             }
             
-            if gameState[6] == 1 && gameState[3] == 1 {
-                if gameState[0] != 2 && gameState[0] == 0 {
-                    turnCell = 6
-                }
-                else {
-                    if gameState[5] == 0 {
-                        turnCell = 5
-                    }
-                }
-            }
             
             // right vertical line has two human turn: block human
             if gameState[2] == 1 && gameState[8] == 1 {
-                if gameState[5] != 2 && gameState[5] == 0 {
+                if gameState[5] == 0 {
                     turnCell = 5
                 }
                 else {
@@ -278,7 +304,7 @@ class TTTBrain {
             }
             
             if gameState[2] == 1 && gameState[5] == 1 {
-                if gameState[8] != 2 && gameState[8] == 0 {
+                if gameState[8] == 0 {
                     turnCell = 8
                 }
                 else {
@@ -289,7 +315,7 @@ class TTTBrain {
             }
             
             if gameState[8] == 1 && gameState[5] == 1 {
-                if gameState[2] != 2 && gameState[2] == 0 {
+                if gameState[2] == 0 {
                     turnCell = 2
                 }
                 else {
@@ -301,7 +327,7 @@ class TTTBrain {
             
             // top horisontal line has two human turn: block human
             if gameState[0] == 1 && gameState[2] == 1 {
-                if gameState[1] != 2 && gameState[1] == 0 {
+                if gameState[1] == 0 {
                     turnCell = 1
                 }
                 else {
@@ -312,7 +338,7 @@ class TTTBrain {
             }
             
             if gameState[0] == 1 && gameState[1] == 1 {
-                if gameState[2] != 2 && gameState[2] == 0 {
+                if gameState[2] == 0 {
                     turnCell = 2
                 }
                 else {
@@ -323,7 +349,7 @@ class TTTBrain {
             }
             
             if gameState[1] == 1 && gameState[2] == 1 {
-                if gameState[0] != 2 && gameState[0] == 0 {
+                if gameState[0] == 0 {
                     turnCell = 0
                 }
                 else {
@@ -335,7 +361,7 @@ class TTTBrain {
             
             // bottom horisontal line has two human turn: block human
             if gameState[6] == 1 && gameState[8] == 1 {
-                if gameState[7] != 2 && gameState[7] == 0 {
+                if gameState[7] == 0 {
                     turnCell = 7
                 }
                 else {
@@ -346,7 +372,7 @@ class TTTBrain {
             }
             
             if gameState[6] == 1 && gameState[7] == 1 {
-                if gameState[8] != 2 && gameState[8] == 0 {
+                if gameState[8] == 0 {
                     turnCell = 8
                 }
                 else {
@@ -357,7 +383,7 @@ class TTTBrain {
             }
             
             if gameState[7] == 1 && gameState[8] == 1 {
-                if gameState[6] != 2 && gameState[6] == 0 {
+                if gameState[6] == 0 {
                     turnCell = 6
                 }
                 else {

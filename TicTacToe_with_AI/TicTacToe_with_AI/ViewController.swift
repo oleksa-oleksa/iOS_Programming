@@ -44,6 +44,7 @@ class ViewController: UIViewController {
             
             // saving the cellNo where human clicked
             var turnCell:Int = sender.tag-1
+            checkGameOverAfterTurn()
 
             /****************************************/
             // HUMAN TURN
@@ -77,7 +78,7 @@ class ViewController: UIViewController {
                     self.activePlayerSign = "zero.png"
                     self.activePlayerName = "Your Turn"
                     self.color = self.green
-                
+                    self.checkGameOverAfterTurn()
                     self.setImageBackground(cellNo: turnCell, activePlayerSign: self.activePlayerSign)
                     self.designButtons(activePlayerName: self.activePlayerName, color: self.color!)
                 
