@@ -61,35 +61,115 @@ class TTTBrain {
         }
         
         /********************************************************************
-        // if we have 2 computer turns on one of the diagonals: AI can win, it wins
-         ********************************************************************/
-        if turnCell == nil && gameState[4] == 2 {
-            // first diagonal has already 2 computer turns
-            if gameState[0] != 1 && gameState[8] != 1 {
-                if gameState[0] == 2 {
-                    turnCell = 8
-                }
-                else if gameState[8] == 2 {
-                    turnCell = 0
-                }
+        // if center and one corner already taken by Human
+        // 2. try to block human
+        ********************************************************************/
+        
+        if turnCell == nil && gameState[4] == 1 {
+            // Blocks the human winning combination:
+            // first diagonal should be blocked by AI
+            if gameState[0] == 1 && gameState[8] == 0 {
+                turnCell = 8
+            }
+                
+            else if gameState[0] == 0 && gameState[8] == 1 {
+                turnCell = 0
             }
             
-            // has already 2 computer turns
-            if gameState[2] != 1 && gameState[6] != 1 {
-                if gameState[2] == 2 {
-                    turnCell = 6
-                }
-                else if gameState[6] == 2 {
-                    turnCell = 2
-                }
+            // second diagonal should be blocked by AI
+            if gameState[2] == 1 && gameState[6] == 0 {
+                turnCell = 6
+            }
+                
+            else if gameState[2] == 0 && gameState[6] == 1 {
+                turnCell = 2
+            }
+            
+        }
+        
+        /********************************************************************
+         // if center is already taken by Human and a winning combination of human
+         // is going to be on vertical or horisonal line: block human
+         ********************************************************************/
+        
+        if turnCell == nil && gameState[4] == 1 {
+            // Blocks the human winning combination:
+            // first diagonal should be blocked by AI
+            if gameState[3] == 1 && gameState[5] == 0 {
+                turnCell = 5
+            }
+                
+            else if gameState[3] == 0 && gameState[5] == 1 {
+                turnCell = 3
+            }
+            
+            // second diagonal is free for AI
+            if gameState[1] == 1 && gameState[7] == 0 {
+                turnCell = 7
+            }
+                
+            else if gameState[1] == 0 && gameState[7] == 1 {
+                turnCell = 1
             }
         }
+        
+        /********************************************************************
+         // both corners are still free and human turn is in the center
+         // just make turn on the corner
+         ********************************************************************/
+        if turnCell == nil && gameState[4] == 1 {
+            if gameState[0] == 0 && gameState[8] == 0 {
+                turnCell = 8
+            }
+            
+            if gameState[2] == 0 && gameState[6] == 0 {
+                turnCell = 2
+            }
+            
+            // both sides are still free, just make turn on the corner
+            if gameState[3] == 0 && gameState[5] == 0 {
+                turnCell = 3
+            }
+            
+            if gameState[1] == 0 && gameState[8] == 7 {
+                turnCell = 1
+            }
+        }
+        
+        
+        
         
         /********************************************************************
          // if we have 2 computer turns on one of the lines: AI can win, it wins
          ********************************************************************/
         
         if turnCell == nil && gameState[4] == 2 {
+            // first diagonal has already 2 computer turns
+            if gameState[1] != 1 && gameState[7] != 1 {
+                if gameState[1] == 2 {
+                    turnCell = 7
+                }
+                else if gameState[7] == 2 {
+                    turnCell = 1
+                }
+            }
+            
+            // has already 2 computer turns
+            if gameState[3] != 1 && gameState[5] != 1 {
+                if gameState[3] == 2 {
+                    turnCell = 5
+                }
+                else if gameState[5] == 2 {
+                    turnCell = 3
+                }
+            }
+        }
+        
+        /********************************************************************
+         // if we have 2 human turns on one of the lines: block human
+         ********************************************************************/
+        
+        if turnCell == nil && gameState[4] == 1 {
             // first diagonal has already 2 computer turns
             if gameState[1] != 1 && gameState[7] != 1 {
                 if gameState[1] == 2 {
@@ -133,7 +213,8 @@ class TTTBrain {
         }
         
         /********************************************************************
-        // if center is already taken by AI - but cornes were taken by human: Block Human
+        // if center is already taken by AI
+        // Important: but cornes were taken by human: Block Human
         ********************************************************************/
 
         if turnCell == nil && gameState[4] == 2 {
@@ -312,13 +393,6 @@ class TTTBrain {
             }
         }
         
-        /********************************************************************
-         // if center is already taken by human
-         ********************************************************************/
-        if turnCell == nil && gameState[4] == 1 {
-            
-            
-        }
         
         return turnCell! // for button tag
     }
