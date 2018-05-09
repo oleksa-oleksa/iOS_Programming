@@ -95,6 +95,8 @@ class TTTBrain {
         if turnCell == nil && gameState[4] == 1 {
             // Blocks the human winning combination:
             // first diagonal should be blocked by AI
+            var combinations = []
+            
             if gameState[3] == 1 && gameState[5] == 0 {
                 turnCell = 5
             }
@@ -393,6 +395,41 @@ class TTTBrain {
             }
         }
         
+        /********************************************************************
+         // Minor situation that leads to draw: nobody wins
+         ********************************************************************/
+        
+        if turnCell == nil && gameState[4] == 2 {
+            
+            if gameState[0] != 0 && gameState[2] != 0 {
+                if gameState[0] != gameState[2] {
+                    turnCell = 1
+                }
+            }
+            
+            if gameState[2] != 0 && gameState[8] != 0 {
+                if gameState[2] != gameState[8] {
+                    turnCell = 5
+                }
+            }
+            
+            if gameState[6] != 0 && gameState[8] != 0 {
+                if gameState[6] != gameState[8] {
+                    turnCell = 7
+                }
+            }
+            
+            if gameState[0] != 0 && gameState[6] != 0 {
+                if gameState[0] != gameState[6] {
+                    turnCell = 3
+                }
+            }
+        }
+        
+        if turnCell == nil {
+            turnCell = gameState.index(of: 0)
+            
+        }
         
         return turnCell! // for button tag
     }
