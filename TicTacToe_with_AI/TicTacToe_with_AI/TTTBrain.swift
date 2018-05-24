@@ -193,8 +193,8 @@ class TTTBrain {
             
             if gameState[1] == 0 && gameState[7] == 0 {
                 combinations.append(7)
-                
             }
+            
             let randomIndex = Int(arc4random_uniform(UInt32(combinations.count)))
             turnCell = combinations[randomIndex]
         }
