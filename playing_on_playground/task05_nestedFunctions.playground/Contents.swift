@@ -19,8 +19,8 @@ func fMySwiftness(number: Bool) -> (Int) -> Int {
 var currentValue = 10
 // makeMath now refers to the nested powerTwo() function
 while currentValue > 0 {
-    let makeMath = fMySwiftness(number: currentValue > 5)
-    let result = makeMath(currentValue)
+    let fMyFunction = fMySwiftness(number: currentValue > 5)
+    let result = fMyFunction(currentValue)
     print("\(currentValue) => \(result)")
     currentValue = currentValue - 1
 }
