@@ -15,7 +15,7 @@ struct Station {
     let radius: Double
 }
 
-let radiusWithBike = 0.25 // meters
+let radiusWithBike = 250.0 // meters
 
 // Array for keepeng all 6 stations
 
