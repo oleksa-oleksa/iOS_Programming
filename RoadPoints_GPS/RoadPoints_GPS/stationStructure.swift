@@ -21,21 +21,27 @@ let radiusWithBike = 250.0 // meters
 let stationsOnTheRoad = [station01, station02, station03,
                         station04, station05, station06]
 // Array for all 6 tasks
-let stationsTask = ["Buy a pinta of a craft beer",
+let stationsTask = ["Drink a small beer in Beergarten and read a newspapper",
                     "Borrow the new engineering magazine \"Make\" from Uni Library",
                     "Buy a food for a kitten",
-                    "Do some sport",
+                    "Call a brother and tell again how wonderful Berlin is",
                     "Buy a new Sudoku for a beloved wife",
                     "Visit the Monkey bar and drink a fresh coffee"]
 
+let stationTitle = ["Beergarten", "TU Berlin",
+                    "Lust Garten", "Lützowplatz",
+                    "U-Bahn Kurfürstendamm", "Berlin Zoo"]
+
 var foundLocation = [0, 0, 0, 0, 0, 0]
+
+var customAnnotations: [CustomAnnotation] = []
 
 func compareLocations(location: CLLocation) -> Int {
     for (idx, thisLocation) in stationsOnTheRoad.enumerated() {
         let distance = haversineDinstance(la1: thisLocation.lat, lo1: thisLocation.lon, la2: location.coordinate.latitude, lo2: location.coordinate.longitude)
         if distance < radiusWithBike {
             foundLocation[idx] = 1
-            return idx + 1 // the index of a corresponding station
+            return idx // the index of a corresponding station
         }
         else {
             foundLocation[idx] = 0
@@ -45,27 +51,27 @@ func compareLocations(location: CLLocation) -> Int {
 }
 
 // STATIONS
-// Vagabung Brewery
-// Task: Buy a pinta of a craft beer
-let station01 = Station(lat: 52.546254,
-                        lon: 13.350635,
+// Beergarten
+// Task: Drink a small beer in Beergarten and read a newspapper
+let station01 = Station(lat: 52.518198,
+                        lon: 13.380538,
                         radius: radiusWithBike)
 
 // Technical University Berlin
 // Task: Borrow the new engineering magazine "Make" from Uni Library
-let station02 = Station(lat: 52.510038,
-                        lon: 13.338477,
+let station02 = Station(lat: 52.512922,
+                        lon: 13.322592,
                         radius: radiusWithBike)
 
-// Petshop
+// Lust Garten
 // Task: Buy a food for a kitten
-let station03 = Station(lat: 52.491482,
-                        lon: 13.297582,
+let station03 = Station(lat: 52.517848,
+                        lon: 13.399518,
                         radius: radiusWithBike)
-// Superfit
-// Task: Do some sport
-let station04 = Station(lat: 52.458683,
-                        lon: 13.34482,
+// Lützowplatz
+// Task: Call a brother and tell again how wonderful Berlin is
+let station04 = Station(lat: 52.504930,
+                        lon: 13.352332,
                         radius: radiusWithBike)
 
 // U-Bahn Kurfürstendamm
@@ -75,8 +81,8 @@ let station05 = Station(lat: 52.503159,
                         radius: radiusWithBike)
 // Berlin Zoo
 // Task: Visit the Monkey bar and drink a fresh coffee
-let station06 = Station(lat: 52.507323,
-                        lon: 13.336106,
+let station06 = Station(lat: 52.506037,
+                        lon: 13.341518,
                         radius: radiusWithBike)
 
 
