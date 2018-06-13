@@ -16,11 +16,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var taskLabel: UILabel!
     let locationManager:CLLocationManager = CLLocationManager()
     
-    var color:UIColor?
-    var green:UIColor = UIColor(red: 113.0/255.0, green:
-        165.0/255.0, blue: 29.0/255.0, alpha: 1.0)
-    
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for currenLocation in locations {
             print("\(index): \(currenLocation)")
@@ -62,7 +57,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
             let coordinate = CLLocationCoordinate2D(latitude: location.lat, longitude: location.lon)
             
-            let annotation = CustomAnnotation(coordinate: coordinate, title: stationTitle[idx], subtitle: stationTitle[idx], color: UIColor.red)
+            let annotation = CustomAnnotation(coordinate: coordinate, title: stationTitle[idx], subtitle: stationTitle[idx], color: MKPinAnnotationView.bluePinColor())
             
             mapView.addAnnotation(annotation)
             

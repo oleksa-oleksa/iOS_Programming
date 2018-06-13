@@ -30,7 +30,7 @@ let stationsTask = ["Drink a small beer in Beergarten and read a newspapper",
 
 let stationTitle = ["Beergarten", "TU Berlin",
                     "Lust Garten", "Lützowplatz",
-                    "U-Bahn Kurfürstendamm", "Berlin Zoo"]
+                    "Schloss Bellevue", "Berlin Zoo"]
 
 var foundLocation = [0, 0, 0, 0, 0, 0]
 
@@ -74,10 +74,10 @@ let station04 = Station(lat: 52.504930,
                         lon: 13.352332,
                         radius: radiusWithBike)
 
-// U-Bahn Kurfürstendamm
+// Schloss Bellevue
 // Task: Buy a new Sudoku for a beloved wife
-let station05 = Station(lat: 52.503159,
-                        lon: 13.331907,
+let station05 = Station(lat: 52.517117,
+                        lon: 13.354115,
                         radius: radiusWithBike)
 // Berlin Zoo
 // Task: Visit the Monkey bar and drink a fresh coffee

@@ -18,8 +18,14 @@ class CustomAnnotation: NSObject, MKAnnotation {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
-        self.pinView?.pinTintColor = color
+        self.pinView?.pinTintColor = MKPinAnnotationView.bluePinColor()
         
         super.init()
+    }
+}
+
+extension MKPinAnnotationView {
+    class func bluePinColor() -> UIColor {
+        return UIColor.blue
     }
 }
