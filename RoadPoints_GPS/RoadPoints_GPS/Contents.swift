@@ -1,5 +1,4 @@
-/* code for the calculation the distance in meters on the Earth surface
- from https://github.com/raywenderlich/swift-algorithm-club */
+/* code for the calculation the distance in meters on the Earth surface */
 
 import UIKit
 
