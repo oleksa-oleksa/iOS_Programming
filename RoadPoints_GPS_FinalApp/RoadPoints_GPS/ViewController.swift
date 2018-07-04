@@ -10,12 +10,11 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate, NSBundle {
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var taskLabel: UILabel!
     let locationManager:CLLocationManager = CLLocationManager()
-    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for currenLocation in locations {
@@ -43,7 +42,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSBundle {
     func activateTask(index: Int) {
         taskLabel.text = stationsTask[index]
         customAnnotations[index].pinView?.pinTintColor = UIColor.blue
-        playSoundNotification();
     }
     
     func disableTask(index: Int) {
@@ -68,9 +66,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSBundle {
         }
     }
    
-    
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
