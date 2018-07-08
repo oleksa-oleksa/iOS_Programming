@@ -43,7 +43,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSBundle {
     func activateTask(index: Int) {
         taskLabel.text = stationsTask[index]
         customAnnotations[index].pinView?.pinTintColor = UIColor.blue
-        playSoundNotification();
     }
     
     func disableTask(index: Int) {

@@ -17,6 +17,7 @@
 		1124AAD320C9616D00D7BFE9 /* stationStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1124AAD220C9616D00D7BFE9 /* stationStructure.swift */; };
 		11463E4320D074C400AEF92C /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11463E4220D074C400AEF92C /* CustomAnnotation.swift */; };
 		1151A71820ED6AFD009C802F /* Coin-collect-sound-effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1151A71720ED6AFD009C802F /* Coin-collect-sound-effect.mp3 */; };
+		117DFF2B20F26CE6008360FE /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 117DFF2A20F26CE6008360FE /* location.png */; };
 		11A5AB1920CDC891006E62E3 /* Splash Screen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11A5AB1520CDC891006E62E3 /* Splash Screen@2x.png */; };
 		11A5AB1A20CDC891006E62E3 /* Splash Screen@4x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11A5AB1620CDC891006E62E3 /* Splash Screen@4x.png */; };
 		11A5AB1B20CDC891006E62E3 /* Splash Screen@1x.png in Resources */ = {isa = PBXBuildFile; fileRef = 11A5AB1720CDC891006E62E3 /* Splash Screen@1x.png */; };
@@ -59,6 +60,7 @@
 		1124AAD220C9616D00D7BFE9 /* stationStructure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = stationStructure.swift; sourceTree = "<group>"; };
 		11463E4220D074C400AEF92C /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		1151A71720ED6AFD009C802F /* Coin-collect-sound-effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Coin-collect-sound-effect.mp3"; path = "sound/Coin-collect-sound-effect.mp3"; sourceTree = "<group>"; };
+		117DFF2A20F26CE6008360FE /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = location.png; path = images/location.png; sourceTree = "<group>"; };
 		11A5AB1520CDC891006E62E3 /* Splash Screen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Splash Screen@2x.png"; path = "images/Splash Screen@2x.png"; sourceTree = "<group>"; };
 		11A5AB1620CDC891006E62E3 /* Splash Screen@4x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Splash Screen@4x.png"; path = "images/Splash Screen@4x.png"; sourceTree = "<group>"; };
 		11A5AB1720CDC891006E62E3 /* Splash Screen@1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Splash Screen@1x.png"; path = "images/Splash Screen@1x.png"; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 		1124AAA320C9386800D7BFE9 /* RoadPoints_GPS */ = {
 			isa = PBXGroup;
 			children = (
+				117DFF2A20F26CE6008360FE /* location.png */,
 				11A5AB1F20CDE1FB006E62E3 /* Berlin100.gpx */,
 				11A5AB1D20CDD31B006E62E3 /* Contents.swift */,
 				11A5AB1720CDC891006E62E3 /* Splash Screen@1x.png */,
@@ -261,6 +264,7 @@
 			files = (
 				11A5AB1920CDC891006E62E3 /* Splash Screen@2x.png in Resources */,
 				1124AAAF20C9386800D7BFE9 /* LaunchScreen.storyboard in Resources */,
+				117DFF2B20F26CE6008360FE /* location.png in Resources */,
 				1124AAAC20C9386800D7BFE9 /* Assets.xcassets in Resources */,
 				11A5AB1C20CDC891006E62E3 /* Splash Screen@3x.png in Resources */,
 				1151A71820ED6AFD009C802F /* Coin-collect-sound-effect.mp3 in Resources */,

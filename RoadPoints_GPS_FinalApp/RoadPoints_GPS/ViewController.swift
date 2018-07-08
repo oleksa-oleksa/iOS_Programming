@@ -9,24 +9,21 @@
 import UIKit
 import CoreLocation
 import MapKit
+import AVFoundation
+
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var taskLabel: UILabel!
+    @IBOutlet weak var trackLocation: UIButton!
+    @IBOutlet weak var taskLabelBottomConstraint: NSLayoutConstraint!
     let locationManager:CLLocationManager = CLLocationManager()
+    private var player: AVAudioPlayer?
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for currenLocation in locations {
             print("\(index): \(currenLocation)")
-            
-            let center =  currenLocation.coordinate
-            let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-            let region = MKCoordinateRegion(center: center, span: span)
-            
-            // show current lication on the map
-            mapView.setRegion(region, animated: true)
-            mapView.showsUserLocation = true
             
             // Check if the location inside the radius
             let foundIdx = compareLocations(location: currenLocation)
@@ -41,11 +38,27 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     func activateTask(index: Int) {
         taskLabel.text = stationsTask[index]
+        if taskLabelBottomConstraint.constant != 20 {
+            UIView.animate(withDuration: 0.75) {
+                print("enable")
+                self.taskLabelBottomConstraint.constant = 20
+                self.view.layoutIfNeeded()
+            }
+            playSound(name: "Coin-collect-sound-effect")
+        }
         customAnnotations[index].pinView?.pinTintColor = UIColor.blue
     }
     
     func disableTask(index: Int) {
-        taskLabel.text = ""
+        if taskLabelBottomConstraint.constant != -100 {
+            self.view.layoutIfNeeded()
+            UIView.animate(withDuration: 0.75, animations: {
+                self.taskLabelBottomConstraint.constant = -100
+                self.view.layoutIfNeeded()
+            }, completion: { _ in
+                self.taskLabel.text = ""
+            })
+        }
         customAnnotations[index].pinView?.pinTintColor = UIColor.red
 
     }
@@ -70,6 +83,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
+        
+        taskLabelBottomConstraint.constant = -100
+        
+        trackLocation.layer.cornerRadius = 8
+
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
@@ -78,11 +98,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         drawTaskLocation()
     }
 
-
+    @IBAction func trackLocationButtonDidTap() {
+        mapView.userTrackingMode = .follow
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    private func playSound(name: String) {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "mp3") else { return }
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+            
+            guard let player = player else { return }
+            
+            player.play()
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
     }
 
 }
