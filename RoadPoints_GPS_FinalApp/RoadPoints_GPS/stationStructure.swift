@@ -34,14 +34,14 @@ let stationTitle = ["Beergarten", "Museum for Photography",
 
 var customAnnotations: [CustomAnnotation] = []
 
-func compareLocations(location: CLLocation) -> Int {
+func compareLocations(location: CLLocation) -> Int? {
     for (idx, thisLocation) in stationsOnTheRoad.enumerated() {
         let distance = haversineDinstance(la1: thisLocation.lat, lo1: thisLocation.lon, la2: location.coordinate.latitude, lo2: location.coordinate.longitude)
         if distance < radiusWithBike {
             return idx // the index of a corresponding station
         }
     }
-    return 0 // no index found
+    return nil // no index found
 }
 
 // STATIONS

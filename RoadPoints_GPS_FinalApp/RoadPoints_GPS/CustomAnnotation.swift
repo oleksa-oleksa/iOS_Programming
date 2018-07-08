@@ -12,13 +12,13 @@ class CustomAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String?
-    var pinView: MKPinAnnotationView?
+    var color: UIColor
     
-    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, color: UIColor?) {
+    init(coordinate: CLLocationCoordinate2D, title: String?, subtitle: String?, color: UIColor) {
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
-        self.pinView?.pinTintColor = MKPinAnnotationView.bluePinColor()
+        self.color = color
         
         super.init()
     }

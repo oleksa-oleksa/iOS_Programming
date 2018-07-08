@@ -12,7 +12,7 @@ import MapKit
 import AVFoundation
 
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var taskLabel: UILabel!
@@ -20,57 +20,64 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var taskLabelBottomConstraint: NSLayoutConstraint!
     let locationManager:CLLocationManager = CLLocationManager()
     private var player: AVAudioPlayer?
+    private var currentTaskIdx: Int?
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for currenLocation in locations {
             print("\(index): \(currenLocation)")
             
             // Check if the location inside the radius
-            let foundIdx = compareLocations(location: currenLocation)
-            if foundIdx != 0 {
+            if let foundIdx = compareLocations(location: currenLocation) {
                 activateTask(index: foundIdx)
             }
             else {
-                disableTask(index: foundIdx)
+                disableTask()
             }
         }
     }
     
     func activateTask(index: Int) {
-        taskLabel.text = stationsTask[index]
-        if taskLabelBottomConstraint.constant != 20 {
-            UIView.animate(withDuration: 0.75) {
-                print("enable")
-                self.taskLabelBottomConstraint.constant = 20
-                self.view.layoutIfNeeded()
-            }
-            playSound(name: "Coin-collect-sound-effect")
+        if index == currentTaskIdx {
+            return
         }
-        customAnnotations[index].pinView?.pinTintColor = UIColor.blue
+        
+        currentTaskIdx = index
+        taskLabel.text = stationsTask[index]
+        UIView.animate(withDuration: 0.75) {
+            self.taskLabelBottomConstraint.constant = 20
+            self.view.layoutIfNeeded()
+        }
+        playSound(name: "Coin-collect-sound-effect")
+        
+        drawTaskLocation()
     }
     
-    func disableTask(index: Int) {
-        if taskLabelBottomConstraint.constant != -100 {
-            self.view.layoutIfNeeded()
-            UIView.animate(withDuration: 0.75, animations: {
-                self.taskLabelBottomConstraint.constant = -100
-                self.view.layoutIfNeeded()
-            }, completion: { _ in
-                self.taskLabel.text = ""
-            })
+    func disableTask() {
+        if currentTaskIdx == nil {
+            return
         }
-        customAnnotations[index].pinView?.pinTintColor = UIColor.red
-
+        
+        UIView.animate(withDuration: 0.75, animations: {
+            self.taskLabelBottomConstraint.constant = -100
+            self.view.layoutIfNeeded()
+        }, completion: { _ in
+            self.taskLabel.text = ""
+        })
+        
+        self.currentTaskIdx = nil
+        
+        drawTaskLocation()
     }
     
     func drawTaskLocation() {
         for (idx, location) in stationsOnTheRoad.enumerated() {
             
-            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+//            mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
             
             let coordinate = CLLocationCoordinate2D(latitude: location.lat, longitude: location.lon)
             
-            let annotation = CustomAnnotation(coordinate: coordinate, title: stationTitle[idx], subtitle: stationTitle[idx], color: MKPinAnnotationView.bluePinColor())
+            let color = idx == currentTaskIdx ? MKPinAnnotationView.redPinColor() : MKPinAnnotationView.bluePinColor()
+            let annotation = CustomAnnotation(coordinate: coordinate, title: stationTitle[idx], subtitle: stationTitle[idx], color: color)
             
             mapView.addAnnotation(annotation)
             
@@ -83,6 +90,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        trackLocation.isHidden = true
+        
         mapView.showsUserLocation = true
         mapView.userTrackingMode = .follow
         
@@ -94,6 +103,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         locationManager.distanceFilter = 10
+        
+        mapView.delegate = self
         
         drawTaskLocation()
     }
@@ -124,6 +135,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             print(error.localizedDescription)
         }
     }
+    
+    // MARK: MKMapViewDelegate
 
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if let customAnnotation = annotation as? CustomAnnotation {
+            let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotation")
+            view.pinTintColor = customAnnotation.color
+            return view
+        }
+        return nil
+    }
+    
+    func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+        if mode == .none {
+            trackLocation.isHidden = false
+        } else {
+            trackLocation.isHidden = true
+        }
+    }
+    
 }
 
