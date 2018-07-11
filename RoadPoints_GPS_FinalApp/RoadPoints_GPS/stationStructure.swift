@@ -19,18 +19,19 @@ let radiusWithBike = 300.0 // meters
 
 // Array for all 6 stations
 let stationsOnTheRoad = [station01, station02, station03,
-                        station04, station05, station06]
+                        station04, station05, station06, station07]
 // Array for all 6 tasks
 let stationsTask = ["Drink a small beer in Beergarten and read a newspapper",
                     "Borrow the new photo magazine from Museum",
                     "Buy a food for a kitten",
                     "Call a brother and tell again how wonderful Berlin is",
                     "Buy a new Sudoku for a beloved wife",
-                    "Visit the Monkey bar and drink a fresh coffee"]
+                    "Visit the Monkey bar and drink a fresh coffee",
+                    "Listen to AC/DC"]
 
 let stationTitle = ["Beergarten", "Museum for Photography",
                     "Lust Garten", "Lützowplatz",
-                    "Schloss Bellevue", "Berlin Zoo"]
+                    "Schloss Bellevue", "Berlin Zoo", "Hard Rock Cafe"]
 
 var customAnnotations: [CustomAnnotation] = []
 
@@ -79,5 +80,10 @@ let station06 = Station(lat: 52.506037,
                         lon: 13.341518,
                         radius: radiusWithBike)
 
+// Hard Rock Cafe
+// Task: Listen to AC/DC
+let station07 = Station(lat: 52.503927,
+                        lon: 13.333820,
+                        radius: radiusWithBike)
 
 
