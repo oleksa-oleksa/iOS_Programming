@@ -7,10 +7,12 @@ I have chosen this module to get an experience with a modern high-level programm
 I have done my Applications with custom GUI in accordance with Human Interface Guidelines.
 
 Projects:
-01. postfix_calculator_featured
+=======================================================
+postfix_calculator_featured
 a postfix calculator with endless calculation and GUI
 
-02. TicTacToe_with_AI: a simple Tic Tac Toe Game, player plays against a computer
+=======================================================
+TicTacToe_with_AI: a simple Tic Tac Toe Game, player plays against a computer
 
 Algorithm:
 1. If AI can win, it wins
@@ -22,6 +24,6 @@ Algorithm:
 6. if center is occupied - take corner
 7. block human - make winning combination
         
-
-03. RoadPoints_GPS_FinalApp
+=======================================================
+RoadPoints_GPS_FinalApp
 An Application using CoreLocation. Simulation done with a  gpx-file for Berlin. There are 6 points on the map with custom tutles and tasks. When a user approaches the some point, he receives a sound notification and a text warning about the task. It is a small application with GPS that could serve as personal adviser for old people and remind them to do some tasks depending on their location in the city.
