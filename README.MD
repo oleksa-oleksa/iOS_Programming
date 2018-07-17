@@ -10,9 +10,7 @@ Projects:
 
 =======================================================
 
-postfix_calculator_featured
-a postfix calculator with endless calculation and GUI
-
+postfix_calculator_featured: a postfix calculator with endless calculation and GUI
 
 
 =======================================================
@@ -25,13 +23,11 @@ Algorithm:
 3. AI tries to create a winning combination
 
 4. If center is not occupied - take it
-5. if center is yours - 1. block human 2. take a free corner to create
+5. if center is yours: block human, take a free corner
 6. if center is occupied - take corner
 7. block human - make winning combination
-
 
         
 =======================================================
 
-RoadPoints_GPS_FinalApp
-An Application using CoreLocation. Simulation done with a  gpx-file for Berlin. There are 6 points on the map with custom tutles and tasks. When a user approaches the some point, he receives a sound notification and a text warning about the task. It is a small application with GPS that could serve as personal adviser for old people and remind them to do some tasks depending on their location in the city.
+RoadPoints_GPS_FinalApp: An Application using CoreLocation. Simulation done with a  gpx-file for Berlin. There are 6 points on the map with custom tutles and tasks. When a user approaches the some point, he receives a sound notification and a text warning about the task. It is a small application with GPS that could serve as personal adviser for old people and remind them to do some tasks depending on their location in the city.

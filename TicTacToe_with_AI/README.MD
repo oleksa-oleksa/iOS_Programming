@@ -6,7 +6,7 @@ Algorithm:
 3. AI tries to create a winning combination
 
 4. If center is not occupied - take it
-5. if center is yours - 1. block human 2. take a free corner to create
+5. if center is yours: block human, take a free corner
 6. if center is occupied - take corner
 7. block human - make winning combination
 
