@@ -1,7 +1,7 @@
-iOS Programming, Swift 4.0
-University Course at Beuth University of Applied Sciences
-Sommer Semester 2018
-Elective module offered for students of Computer Engineering
+iOS Programming, Swift 4.0.
+University Course at Beuth University of Applied Sciences.
+Sommer Semester 2018.
+Elective module offered for students of Computer Engineering.
 
 I have chosen this module to get an experience with a modern high-level programming language. 
 I have done my Applications with custom GUI in accordance with Human Interface Guidelines.
