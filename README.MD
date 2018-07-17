@@ -9,8 +9,10 @@ I have done my Applications with custom GUI in accordance with Human Interface G
 Projects:
 
 =======================================================
+
 postfix_calculator_featured
 a postfix calculator with endless calculation and GUI
+
 
 
 =======================================================
@@ -26,6 +28,7 @@ Algorithm:
 5. if center is yours - 1. block human 2. take a free corner to create
 6. if center is occupied - take corner
 7. block human - make winning combination
+
 
         
 =======================================================
