@@ -46,7 +46,7 @@ class TTTBrain {
          a1. If center is not occupied - take it
          a2. if center is yours - 1. block human 2. take a free corner to create
          
-         b1. if center is occupaed - take corner
+         b1. if center is occupied - take corner
          b2. 1. block human 2. make winning combination
          */
         
