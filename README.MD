@@ -13,15 +13,14 @@ a postfix calculator with endless calculation and GUI
 02. TicTacToe_with_AI: a simple Tic Tac Toe Game, player plays against a computer
 
 Algorithm:
-         a. If AI can win, it wins
-         b. AI blocks your winning combinations
-         c. AI tries to create a winning combination
-         
-         d. If center is not occupied - take it
-         e. if center is yours - 1. block human 2. take a free corner to create
-         
-         f. if center is occupied - take corner
-         g. 1. block human 2. make winning combination
+1. If AI can win, it wins
+2. AI blocks your winning combinations
+3. AI tries to create a winning combination
+
+4. If center is not occupied - take it
+5. if center is yours - 1. block human 2. take a free corner to create
+6. if center is occupied - take corner
+7. block human - make winning combination
         
 
 03. RoadPoints_GPS_FinalApp
