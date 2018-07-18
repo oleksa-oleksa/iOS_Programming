@@ -19,5 +19,21 @@ func someFunction(parameterWithDefault: Int = 12) {
     // function body goes here
     // if no arguments are passed to the function call,
     // value of the parameterWithdefault is 12
+    print(parameterWithDefault)
 }
 
+someFunction(parameterWithDefault: 6)
+someFunction()
+
+func swapTwoInts(a: inout Int, b: inout Int) {
+    let tmpA = a
+    a = b
+    b = tmpA
+}
+
+var someInt = 3
+var anotherInt = 25
+
+print("Before swap: \(someInt), \(anotherInt)")
+swapTwoInts(a: &someInt, b: &anotherInt)
+print("After swap: \(someInt), \(anotherInt)")
