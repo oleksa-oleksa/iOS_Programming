@@ -7,7 +7,7 @@ class MyClass {
 }
 
 let myInstance = MyClass(aWert: 10)
-let anotherMyInstance = MyClass()
+let anotherMyInstance = MyClass(aWert: 20)
 
 var myStr = "Highlander"
 myStr += " and another Highlander"
@@ -22,13 +22,13 @@ if i != nil {
 //class MyClass {
 //    var a  = 20
 //
-//    init (aWert: int) { // Int capital letter
+//    init (aWert: int) {
 //        a = 10
 //    }
 //}
 //
 //let myInstance = MyClass(aWert: 10)
-//let anotherMyInstance = MyClass() // error: error: missing argument for parameter 'aWert' in call
+//let anotherMyInstance = MyClass() // error: missing argument for parameter 'aWert' in call
 //
 //
 //let myStr = "Highlander"
