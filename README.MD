@@ -30,4 +30,10 @@ Algorithm:
         
 =======================================================
 
-RoadPoints_GPS_FinalApp: An Application using CoreLocation. Simulation done with a  gpx-file for Berlin. There are 6 points on the map with custom tutles and tasks. When a user approaches the some point, he receives a sound notification and a text warning about the task. It is a small application with GPS that could serve as personal adviser for old people and remind them to do some tasks depending on their location in the city.
+RoadPoints_GPS_FinalApp: An Application using CoreLocation. Simulation done with a  gpx-file for Berlin. There are 6 points on the map with custom titles and tasks. When a user approaches the some point, he receives a sound notification and a text warning about the task. It is a small application with GPS that could serve as personal adviser for old people and remind them to do some tasks depending on their location in the city.
+
+
+=======================================================
+
+Minor:
+Tasks for understanding Swift functions, enumerations, lambda functions, exam training.
