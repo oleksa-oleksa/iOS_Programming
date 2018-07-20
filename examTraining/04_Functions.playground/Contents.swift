@@ -25,6 +25,8 @@ func someFunction(parameterWithDefault: Int = 12) {
 someFunction(parameterWithDefault: 6)
 someFunction()
 
+//=================================================
+
 func swapTwoInts(a: inout Int, b: inout Int) {
     let tmpA = a
     a = b
@@ -37,3 +39,20 @@ var anotherInt = 25
 print("Before swap: \(someInt), \(anotherInt)")
 swapTwoInts(a: &someInt, b: &anotherInt)
 print("After swap: \(someInt), \(anotherInt)")
+
+//==================================================
+
+func join(string s1: String, toString s2: String, withJoiner joiner: String) -> String{
+ 
+    return s1 + joiner + s2
+}
+
+func join2(s1: String, s2: String, joiner: String) -> String{
+    
+    return s1 + joiner + s2
+}
+
+print(join(string: "Hallo", toString: "Ihr Kinder", withJoiner: ", "))
+print(join2(s1: "Hallo", s2: "Ihr Kinder", joiner: ", "))
+
+
